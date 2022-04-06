@@ -1,6 +1,7 @@
 package com.sportschatroom.controller;
 
 import java.time.LocalDate;
+import java.time.LocalTime;
 import java.time.format.DateTimeFormatter;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -12,6 +13,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.sportschatroom.model.UserInfo;
+import com.sportschatroom.model.UserLoginTracking;
 import com.sportschatroom.request.UserInfoRequest;
 import com.sportschatroom.service.SportsChatroomService;
 
@@ -30,11 +32,10 @@ public class Controller {
 	
 	@CrossOrigin
 	@PostMapping (path={"/addusername"},produces = MediaType.APPLICATION_JSON_VALUE)
-	public String addUsername(@RequestBody UserInfoRequest userInfoRequest) throws Exception  {
+	public UserLoginTracking addUsername(@RequestBody UserInfoRequest userInfoRequest) throws Exception  {
 		UserInfo userInfo = sportsChatroomService.retrieveUserInfo(userInfoRequest.getUsername());
 		if (userInfo != null) {
-			System.out.println(userInfo.getId());
-			return "Error: The entered username already exists!";
+			throw new IllegalArgumentException("The user is already in the list.");
 		}
 		
 		userInfo = new UserInfo();
@@ -48,8 +49,15 @@ public class Controller {
 		
 		System.out.println(sportsChatroomService.retrieveUserInfo(userInfoRequest.getUsername()).getId());
 		String id = Integer.toString(sportsChatroomService.retrieveUserInfo(userInfoRequest.getUsername()).getId());
-		System.out.println(id);
-		return id;
+		
+		LocalTime time = LocalTime.now();
+		
+		UserLoginTracking userLoginTracking = new UserLoginTracking();
+		userLoginTracking.setUserId(id);
+		userLoginTracking.setLoginDate(dtf.format(localDate));
+		userLoginTracking.setLoginTime(time.toString());
+
+		return userLoginTracking;
 	}
 	
 }
