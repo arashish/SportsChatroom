@@ -4,14 +4,14 @@ import javax.persistence.Entity;
 
 public class UserLoginTracking {
 
-	private String userId;
+	private long userId;
 	private String loginDate;
 	private String loginTime;
 	
-	public String getUserId() {
+	public long getUserId() {
 		return userId;
 	}
-	public void setUserId(String userId) {
+	public void setUserId(long userId) {
 		this.userId = userId;
 	}
 	public String getLoginDate() {

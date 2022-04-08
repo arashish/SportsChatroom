@@ -11,7 +11,7 @@ public class UserInfo {
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	private int id;
+	private long id;
 	
 	private String username;
 	@Column(name="sport_name")
@@ -19,7 +19,7 @@ public class UserInfo {
 	@Column(name="created_date")
 	private String createdDate;
 
-	public int getId() {
+	public long getId() {
 		return id;
 	}
 
