@@ -58,12 +58,12 @@ public class SportsChatroomService {
 		try {
 			messageList = messageRepo.findAll();
 			for (Message message: messageList) {
-				UserInfo userInfo = userInfoRepo.findById(message.getUserId());
+				UserInfo userInfo = userInfoRepo.findByUsername(message.getUsername());
 				MessageData messageData = new MessageData();
 				messageData.setName(userInfo.getUsername());
 				messageData.setMessage(message.getMessage());
-				messageData.setMessageTime(message.getMessageTime());
-				messageData.setMessageDate(message.getMessageDate());
+				//messageData.setMessageTime(message.getMessageTime());
+				//messageData.setMessageDate(message.getMessageDate());
 				messageDataList.add(messageData);
 			}
 			

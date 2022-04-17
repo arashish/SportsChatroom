@@ -1,27 +1,28 @@
 package com.sportschatroom.model;
 
+import java.sql.Timestamp;
+
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 
+import lombok.Builder;
+
 @Entity
+@Builder
 public class Message {
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	@Column(name="message_id")
 	private long messageId;
-	@Column(name="user_id")
-	private long userId;
+	private String username;
 	private String message;
 	
-	@Column(name="message_date")
-	private String messageDate;
-	
 	@Column(name="message_time")
-	private String messageTime;
+	private Timestamp messageTime;
 
 	public long getMessageId() {
 		return messageId;
@@ -31,12 +32,12 @@ public class Message {
 		this.messageId = messageId;
 	}
 
-	public long getUserId() {
-		return userId;
+	public String getUsername() {
+		return username;
 	}
 
-	public void setUserId(long userId) {
-		this.userId = userId;
+	public void setUsername(String username) {
+		this.username = username;
 	}
 
 	public String getMessage() {
@@ -47,21 +48,13 @@ public class Message {
 		this.message = message;
 	}
 
-	public String getMessageDate() {
-		return messageDate;
-	}
-
-	public void setMessageDate(String messageDate) {
-		this.messageDate = messageDate;
-	}
-
-	public String getMessageTime() {
+	public Timestamp getMessageTime() {
 		return messageTime;
 	}
 
-	public void setMessageTime(String messageTime) {
+	public void setMessageTime(Timestamp messageTime) {
 		this.messageTime = messageTime;
 	}
-	
+
 	
 }
