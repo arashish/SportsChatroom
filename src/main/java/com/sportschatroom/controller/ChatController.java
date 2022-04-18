@@ -14,7 +14,9 @@ import org.springframework.messaging.handler.annotation.SendTo;
 import org.springframework.messaging.simp.SimpMessageHeaderAccessor;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.CrossOrigin;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
@@ -26,65 +28,65 @@ import com.sportschatroom.request.UserInfoRequest;
 import com.sportschatroom.response.MessageData;
 import com.sportschatroom.service.SportsChatroomService;
 
-@Controller
+@RestController
 public class ChatController {
 	
-	@MessageMapping("/app/chat.send")
-	@SendTo("/topic/public")
-	public  Message sendMessage(@Payload final Message message)
-	{
-		return message;
-	}
-	
-	@MessageMapping("/app/chat.newUser")
-	@SendTo("/topic/public")
-	public Message newUser(@Payload final Message message, SimpMessageHeaderAccessor headerAccessor) {
-		headerAccessor.getSessionAttributes().put("username", message.getUsername());
-		return message;
-	}
-	
-	
-	
-//	@Autowired
-//	SportsChatroomService sportsChatroomService;
-//	
-//	
-//	@CrossOrigin
-//	@GetMapping (path={"/"},produces = MediaType.APPLICATION_JSON_VALUE)
-//	public String home() {
-//		return "Welcome to SportsChatroom";
+//	@MessageMapping("/app/chat.send")
+//	@SendTo("/topic/public")
+//	public  Message sendMessage(@Payload final Message message)
+//	{
+//		return message;
 //	}
 //	
-//	@CrossOrigin
-//	@PostMapping (path={"/addusername"},produces = MediaType.APPLICATION_JSON_VALUE)
-//	public UserLoginTracking addUsername(@RequestBody UserInfoRequest userInfoRequest) throws Exception  {
-//		UserInfo userInfo = sportsChatroomService.retrieveUserInfo(userInfoRequest.getUsername());
-//		if (userInfo != null) {
-//			throw new IllegalArgumentException("The user is already in the list.");
-//		}
-//		
-//		userInfo = new UserInfo();
-//		userInfo.setUsername(userInfoRequest.getUsername());
-//		userInfo.setSportName(userInfoRequest.getSportName());
-//
-//		LocalDate localDate = LocalDate.now();
-//		DateTimeFormatter dtf = DateTimeFormatter.ofPattern("MM/dd/yyyy");
-//		userInfo.setCreatedDate(dtf.format(localDate));
-//		sportsChatroomService.addUsername(userInfo);
-//		
-//		System.out.println(sportsChatroomService.retrieveUserInfo(userInfoRequest.getUsername()).getId());
-//		long id = sportsChatroomService.retrieveUserInfo(userInfoRequest.getUsername()).getId();
-//		
-//		LocalTime time = LocalTime.now();
-//		
-//		UserLoginTracking userLoginTracking = new UserLoginTracking();
-//		userLoginTracking.setUserId(id);
-//		userLoginTracking.setLoginDate(dtf.format(localDate));
-//		userLoginTracking.setLoginTime(time.toString());
-//
-//		return userLoginTracking;
+//	@MessageMapping("/app/chat.newUser")
+//	@SendTo("/topic/public")
+//	public Message newUser(@Payload final Message message, SimpMessageHeaderAccessor headerAccessor) {
+//		headerAccessor.getSessionAttributes().put("username", message.getUsername());
+//		return message;
 //	}
-//	
+	
+	
+	
+	@Autowired
+	SportsChatroomService sportsChatroomService;
+	
+	
+	@CrossOrigin
+	@GetMapping (path={"/"},produces = MediaType.APPLICATION_JSON_VALUE)
+	public String home() {
+		return "Welcome to SportsChatroom";
+	}
+	
+	@CrossOrigin
+	@PostMapping (path={"/addusername"},produces = MediaType.APPLICATION_JSON_VALUE)
+	public String addUsername(@RequestBody UserInfoRequest userInfoRequest) throws Exception  {
+		UserInfo userInfo = sportsChatroomService.retrieveUserInfo(userInfoRequest.getUsername());
+		if (userInfo != null) {
+			throw new IllegalArgumentException("The user is already in the list.");
+		}
+		
+		userInfo = new UserInfo();
+		userInfo.setUsername(userInfoRequest.getUsername());
+		userInfo.setSportName(userInfoRequest.getSportName());
+
+		LocalDate localDate = LocalDate.now();
+		DateTimeFormatter dtf = DateTimeFormatter.ofPattern("MM/dd/yyyy");
+		userInfo.setCreatedDate(dtf.format(localDate));
+		sportsChatroomService.addUsername(userInfo);
+		
+		System.out.println(sportsChatroomService.retrieveUserInfo(userInfoRequest.getUsername()).getId());
+		
+		String status = "200";
+		return status;
+	}
+	
+	@CrossOrigin
+	@DeleteMapping(value = {"/deleteusername/{username}"}, produces = MediaType.APPLICATION_JSON_VALUE)
+	public String storeMessage(@PathVariable(value = "username") String username) throws Exception{
+		String status = sportsChatroomService.deleteUsername(username);
+		return status;
+	}
+	
 //	@CrossOrigin
 //	@PostMapping (path={"/storemessage"}, produces = MediaType.APPLICATION_JSON_VALUE)
 //	public void storeMessage(@RequestBody Message message) {
@@ -102,6 +104,7 @@ public class ChatController {
 //		
 //		System.out.println("Message stored successfully");	
 //	}
+	
 //	
 //	@CrossOrigin
 //	@GetMapping (path={"/retrievemessages"}, produces = MediaType.APPLICATION_JSON_VALUE)

@@ -20,7 +20,8 @@ public class Message {
 	private long messageId;
 	private String username;
 	private String message;
-	
+	@Column (name="sport_name")
+	private String sportName;
 	@Column(name="message_time")
 	private Timestamp messageTime;
 
@@ -46,6 +47,14 @@ public class Message {
 
 	public void setMessage(String message) {
 		this.message = message;
+	}
+
+	public String getSportName() {
+		return sportName;
+	}
+
+	public void setSportName(String sportName) {
+		this.sportName = sportName;
 	}
 
 	public Timestamp getMessageTime() {

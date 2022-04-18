@@ -31,6 +31,16 @@ public class SportsChatroomService {
 		}
 	}
 	
+	public String deleteUsername(String username) {
+		try {
+			userInfoRepo.deleteByUsername(username);
+			return "200";
+		} catch (Exception E) {
+			System.out.println("Error: Cannot delete from the database!");
+			return "Error";
+		}
+	}
+	
 	
 	public UserInfo retrieveUserInfo(String username) {
 		UserInfo userInfo = new UserInfo();
@@ -74,5 +84,8 @@ public class SportsChatroomService {
 		}
 		return messageDataList;
 	}
+	
+	
+	
 	
 }
