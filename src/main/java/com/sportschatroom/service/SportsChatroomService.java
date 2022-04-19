@@ -7,8 +7,10 @@ import java.util.Optional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import com.sportschatroom.model.Bulletin;
 import com.sportschatroom.model.Message;
 import com.sportschatroom.model.UserInfo;
+import com.sportschatroom.repo.BulletinRepo;
 import com.sportschatroom.repo.MessageRepo;
 import com.sportschatroom.repo.UserInfoRepo;
 import com.sportschatroom.response.MessageData;
@@ -21,6 +23,9 @@ public class SportsChatroomService {
 	
 	@Autowired
 	MessageRepo messageRepo;
+	
+	@Autowired
+	BulletinRepo bulletinRepo;
 	
 	public void addUsername(UserInfo userInfo) {
 		try {
@@ -39,6 +44,31 @@ public class SportsChatroomService {
 			System.out.println("Error: Cannot delete from the database!");
 			return "Error";
 		}
+	}
+	
+	public String updateBulletin(Bulletin bulletin) {
+		try {
+			Bulletin findBulletin = bulletinRepo.findBySportName(bulletin.getSportName());
+			if (findBulletin != null) {
+				bulletinRepo.save(bulletin); //existing
+			} else {
+				bulletinRepo.save(bulletin); //new
+			}
+			return "200";
+		} catch (Exception E) {
+			System.out.println("Error: Cannot update to the database!");
+			return "Error";
+		}
+	}
+	
+	public List<Bulletin> retieveBulletin() {
+		List<Bulletin> findBulletins = null;
+		try {
+			findBulletins = bulletinRepo.findAll();
+		} catch (Exception E) {
+			System.out.println("Error: Cannot update to the database!");
+		}
+		return findBulletins;
 	}
 	
 	
@@ -62,27 +92,16 @@ public class SportsChatroomService {
 		}
 	}
 	
-	public List<MessageData> retrieveMessages() {
-		List<Message> messageList= new ArrayList<Message>();
-		List<MessageData> messageDataList = new ArrayList<MessageData>();
+	public List<Message> retrieveMessages() {
+		List<Message> messages= new ArrayList<Message>();
 		try {
-			messageList = messageRepo.findAll();
-			for (Message message: messageList) {
-				UserInfo userInfo = userInfoRepo.findByUsername(message.getUsername());
-				MessageData messageData = new MessageData();
-				messageData.setName(userInfo.getUsername());
-				messageData.setMessage(message.getMessage());
-				//messageData.setMessageTime(message.getMessageTime());
-				//messageData.setMessageDate(message.getMessageDate());
-				messageDataList.add(messageData);
-			}
-			
+			messages = messageRepo.findAll();
 			System.out.println("Successfully retrieved from the database!");
 		} catch (Exception e) {
 			System.out.println(e.getMessage());
 			System.out.println("Error: Cannot retrieve data from the database!");
 		}
-		return messageDataList;
+		return messages;
 	}
 	
 	

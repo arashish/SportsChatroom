@@ -21,6 +21,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.sportschatroom.model.Bulletin;
 import com.sportschatroom.model.Message;
 import com.sportschatroom.model.UserInfo;
 import com.sportschatroom.model.UserLoginTracking;
@@ -87,6 +88,32 @@ public class ChatController {
 		return status;
 	}
 	
+	@CrossOrigin
+	@GetMapping (path={"/retrievebulletin"}, produces = MediaType.APPLICATION_JSON_VALUE)
+	public List<Bulletin> retrieveBulletin() {
+		System.out.println("Bulletin messages retrieved successfully");
+		List<Bulletin> bulletins= sportsChatroomService.retieveBulletin();
+		return bulletins;	
+	}
+	
+	
+	
+	@CrossOrigin
+	@PostMapping (path={"/updatebulletin"}, produces = MediaType.APPLICATION_JSON_VALUE)
+	public void storeMessage(@RequestBody Bulletin bulletin) {
+		sportsChatroomService.updateBulletin(bulletin);
+		System.out.println("Bulletin messages updated successfully");	
+	}
+	
+	
+	@CrossOrigin
+	@GetMapping (path={"/retrievemessages"}, produces = MediaType.APPLICATION_JSON_VALUE)
+	public List<Message> storeMessage() {
+		List<Message> messages = sportsChatroomService.retrieveMessages();
+		System.out.println("Message retrieved successfully");
+		return messages;	
+	}
+	
 //	@CrossOrigin
 //	@PostMapping (path={"/storemessage"}, produces = MediaType.APPLICATION_JSON_VALUE)
 //	public void storeMessage(@RequestBody Message message) {
@@ -105,14 +132,6 @@ public class ChatController {
 //		System.out.println("Message stored successfully");	
 //	}
 	
-//	
-//	@CrossOrigin
-//	@GetMapping (path={"/retrievemessages"}, produces = MediaType.APPLICATION_JSON_VALUE)
-//	public List<MessageData> storeMessage() {
-//		List<MessageData> messageDataList = sportsChatroomService.retrieveMessages();
-//		System.out.println("Message retrieved successfully");
-//		return messageDataList;	
-//	}
 	
 	
 	
