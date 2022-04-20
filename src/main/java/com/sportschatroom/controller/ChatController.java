@@ -25,7 +25,6 @@ import com.sportschatroom.model.Bulletin;
 import com.sportschatroom.model.Message;
 import com.sportschatroom.model.UserInfo;
 import com.sportschatroom.model.UserLoginTracking;
-import com.sportschatroom.request.UserInfoRequest;
 import com.sportschatroom.response.MessageData;
 import com.sportschatroom.service.SportsChatroomService;
 
@@ -60,7 +59,7 @@ public class ChatController {
 	
 	@CrossOrigin
 	@PostMapping (path={"/addusername"},produces = MediaType.APPLICATION_JSON_VALUE)
-	public String addUsername(@RequestBody UserInfoRequest userInfoRequest) throws Exception  {
+	public String addUsername(@RequestBody UserInfo userInfoRequest) throws Exception  {
 		UserInfo userInfo = sportsChatroomService.retrieveUserInfo(userInfoRequest.getUsername());
 		if (userInfo != null) {
 			throw new IllegalArgumentException("The user is already in the list.");
@@ -105,6 +104,14 @@ public class ChatController {
 		System.out.println("Bulletin messages updated successfully");	
 	}
 	
+	@CrossOrigin
+	@GetMapping (path={"/retrieveusers"}, produces = MediaType.APPLICATION_JSON_VALUE)
+	public List<UserInfo> retrieveUsers() {
+		List<UserInfo> userInfos = sportsChatroomService.retrieveUsers();
+		System.out.println("Message retrieved successfully");
+		return userInfos;	
+	}
+	
 	
 	@CrossOrigin
 	@GetMapping (path={"/retrievemessages"}, produces = MediaType.APPLICATION_JSON_VALUE)
@@ -113,6 +120,21 @@ public class ChatController {
 		System.out.println("Message retrieved successfully");
 		return messages;	
 	}
+	
+	@CrossOrigin
+	@DeleteMapping(value = {"/deleteusers"}, produces = MediaType.APPLICATION_JSON_VALUE)
+	public String deleteUsers() throws Exception{
+		String status = sportsChatroomService.deleteUsers();
+		return status;
+	}
+	
+	@CrossOrigin
+	@DeleteMapping(value = {"/deletemessages"}, produces = MediaType.APPLICATION_JSON_VALUE)
+	public String deleteMessages() throws Exception{
+		String status = sportsChatroomService.deleteMessages();
+		return status;
+	}
+
 	
 //	@CrossOrigin
 //	@PostMapping (path={"/storemessage"}, produces = MediaType.APPLICATION_JSON_VALUE)

@@ -92,6 +92,18 @@ public class SportsChatroomService {
 		}
 	}
 	
+	public List<UserInfo> retrieveUsers() {
+		List<UserInfo> userInfos= new ArrayList<UserInfo>();
+		try {
+			userInfos = userInfoRepo.findAll();
+			System.out.println("Successfully retrieved from the database!");
+		} catch (Exception e) {
+			System.out.println(e.getMessage());
+			System.out.println("Error: Cannot retrieve data from the database!");
+		}
+		return userInfos;
+	}
+	
 	public List<Message> retrieveMessages() {
 		List<Message> messages= new ArrayList<Message>();
 		try {
@@ -104,6 +116,25 @@ public class SportsChatroomService {
 		return messages;
 	}
 	
+	public String deleteUsers() {
+		try {
+			userInfoRepo.deleteAll();
+			return "200";
+		} catch (Exception E) {
+			System.out.println("Error: Cannot delete from the database!");
+			return "Error";
+		}
+	}
+	
+	public String deleteMessages() {
+		try {
+			messageRepo.deleteAll();
+			return "200";
+		} catch (Exception E) {
+			System.out.println("Error: Cannot delete from the database!");
+			return "Error";
+		}
+	}
 	
 	
 	
