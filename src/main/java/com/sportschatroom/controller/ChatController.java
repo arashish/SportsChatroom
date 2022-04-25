@@ -81,6 +81,17 @@ public class ChatController {
 	}
 	
 	@CrossOrigin
+	@PostMapping (path={"/findusername"},produces = MediaType.APPLICATION_JSON_VALUE)
+	public String findUsername(@RequestBody UserInfo userInfoRequest) {
+		UserInfo userInfo = sportsChatroomService.retrieveUserInfo(userInfoRequest.getUsername());
+		if (userInfo != null) {
+			return "200";
+		} else {
+			throw new IllegalArgumentException("The user is already in the list.");
+		}
+	}
+	
+	@CrossOrigin
 	@DeleteMapping(value = {"/deleteusername/{username}"}, produces = MediaType.APPLICATION_JSON_VALUE)
 	public String storeMessage(@PathVariable(value = "username") String username) throws Exception{
 		String status = sportsChatroomService.deleteUsername(username);
