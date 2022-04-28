@@ -13,7 +13,6 @@ import com.sportschatroom.model.UserInfo;
 import com.sportschatroom.repo.BulletinRepo;
 import com.sportschatroom.repo.MessageRepo;
 import com.sportschatroom.repo.UserInfoRepo;
-import com.sportschatroom.response.MessageData;
 
 @Service
 public class SportsChatroomService {

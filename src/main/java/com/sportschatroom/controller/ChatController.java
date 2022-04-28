@@ -24,29 +24,11 @@ import org.springframework.web.bind.annotation.RestController;
 import com.sportschatroom.model.Bulletin;
 import com.sportschatroom.model.Message;
 import com.sportschatroom.model.UserInfo;
-import com.sportschatroom.model.UserLoginTracking;
-import com.sportschatroom.response.MessageData;
 import com.sportschatroom.service.SportsChatroomService;
 
 @RestController
 public class ChatController {
-	
-//	@MessageMapping("/app/chat.send")
-//	@SendTo("/topic/public")
-//	public  Message sendMessage(@Payload final Message message)
-//	{
-//		return message;
-//	}
-//	
-//	@MessageMapping("/app/chat.newUser")
-//	@SendTo("/topic/public")
-//	public Message newUser(@Payload final Message message, SimpMessageHeaderAccessor headerAccessor) {
-//		headerAccessor.getSessionAttributes().put("username", message.getUsername());
-//		return message;
-//	}
-	
-	
-	
+		
 	@Autowired
 	SportsChatroomService sportsChatroomService;
 	
@@ -145,28 +127,5 @@ public class ChatController {
 		String status = sportsChatroomService.deleteMessages();
 		return status;
 	}
-
-	
-//	@CrossOrigin
-//	@PostMapping (path={"/storemessage"}, produces = MediaType.APPLICATION_JSON_VALUE)
-//	public void storeMessage(@RequestBody Message message) {
-//		LocalDate localDate = LocalDate.now();
-//		DateTimeFormatter dtf1 = DateTimeFormatter.ofPattern("MM/dd/yyyy");
-//		
-//		//LocalTime time = LocalTime.now();
-//		DateTimeFormatter dtf2 = DateTimeFormatter.ofPattern("HH:mm:ss");  
-//		LocalDateTime currentTime = LocalDateTime.now();  
-//		
-//		//message.setMessageDate(dtf1.format(localDate));
-//		//message.setMessageTime(dtf2.format(currentTime));
-//		
-//		sportsChatroomService.storeMessage(message);
-//		
-//		System.out.println("Message stored successfully");	
-//	}
-	
-	
-	
-	
 	
 }

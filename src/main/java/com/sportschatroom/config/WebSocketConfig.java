@@ -14,33 +14,6 @@ import com.sportschatroom.handler.ChatWebSocketHandler;
 import com.sportschatroom.handler.FootballChatWebSocketHandler;
 import com.sportschatroom.handler.HockeyChatWebSocketHandler;
 
-//import org.springframework.context.annotation.Configuration;
-//import org.springframework.messaging.simp.config.MessageBrokerRegistry;
-//import org.springframework.web.socket.config.annotation.EnableWebSocketMessageBroker;
-//import org.springframework.web.socket.config.annotation.StompEndpointRegistry;
-//import org.springframework.web.socket.config.annotation.WebSocketMessageBrokerConfigurer;
-//
-//@Configuration
-//@EnableWebSocketMessageBroker
-//public class WebSocketConfig implements WebSocketMessageBrokerConfigurer  {
-//
-//	
-//	@Override
-//	public void registerStompEndpoints(final StompEndpointRegistry registry)
-//	{
-//		registry.addEndpoint("/chat").setAllowedOrigins("*");
-//	}
-//	
-//	@Override
-//	public void configureMessageBroker(final MessageBrokerRegistry registry)
-//	{
-//		registry.setApplicationDestinationPrefixes("/app"); //for message mapping
-//		registry.enableSimpleBroker("/topic"); //to enable a simple memory based message broker to carry the messages we haveb ack to client
-//	}
-//}
-
-
-
 @Configuration
 @EnableWebSocket
 public class WebSocketConfig implements WebSocketConfigurer {
